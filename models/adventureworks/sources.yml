@@ -1,0 +1,35 @@
+version: 2
+
+sources:
+  - name: erp_adventureworks
+    tables:
+      - name: orders
+      - name: customers
+        columns:
+          - name: customerid
+            description: Chave primária da tabela Clientes
+            tests:
+              - unique
+              - not_null
+      - name: products
+        columns:
+          - name: productid
+            description: Chave primária da tabela Produtos
+      - name: order_details
+        columns:
+          - name: salesorderid
+      - name: reasons
+        columns:
+          - name: salesreasonid
+      - name: creditcard
+        columns:
+          - name: creditcardid
+      - name: address
+        columns:
+          - name: addressid
+      - name: stateprovince
+        columns:
+          - name: stateprovinceid
+      - name: countryregion
+        columns:
+          - name: countryregioncode

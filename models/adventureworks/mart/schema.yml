@@ -1,0 +1,55 @@
+version: 2
+
+models:
+    - name: fact_orders
+      columns:
+         - name: salesorderid
+           description: "Chave primária"
+           tests:
+              - not_null
+
+    - name: fact_order_details
+      columns:
+         - name: salesorderid
+           description: "Chave primária"
+           tests:
+              - not_null
+
+    - name: dim_customers
+      columns:
+         - name: customerid
+           description: "Chave primária"
+           tests:
+              - unique
+              - not_null
+
+    - name: dim_products
+      columns:
+         - name: productid
+           description: "Chave primária"
+           tests:
+              - unique
+              - not_null
+
+    - name: dim_reasons
+      columns:
+         - name: salesreasonid
+           description: "Chave primária"
+           tests:
+              - unique
+              - not_null
+
+    - name: dim_creditcard
+      columns:
+         - name: creditcardid
+           description: "Chave primária"
+           tests:
+              - unique
+              - not_null
+
+    - name: dim_address
+      columns:
+         - name: addressid
+           description: "Chave primária"
+           tests:
+              - not_null    
