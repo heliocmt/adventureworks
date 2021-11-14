@@ -1,21 +1,21 @@
 with
         source_data as (
             select
-            salesorderid 
+            salesorderid
+            , customerid 
             , orderdate 
             , duedate 
             , shipdate 
-            , "status"
-            , customerid
+            , subtotal 
+            , taxamt 
+            , freight 
+            , totaldue
+            , status
             , territoryid 
             , billtoaddressid 
             , shiptoaddressid 
             , shipmethodid 
             , creditcardid 
-            , subtotal 
-            , taxamt 
-            , freight 
-            , totaldue
             from {{ source('erp_adventureworks','fact_orders')}}
         )
         select * from source_data
