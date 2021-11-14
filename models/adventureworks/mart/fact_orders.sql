@@ -49,7 +49,6 @@ with
         , taxamt 
         , freight 
         , totaldue
-        , status
         , territoryid 
         , billtoaddressid as addressid 
         , shiptoaddressid 
@@ -75,7 +74,6 @@ with
         , taxamt 
         , freight 
         , totaldue
-        , status
         , address1.addressid 
         , shiptoaddressid 
         , shipmethodid 	

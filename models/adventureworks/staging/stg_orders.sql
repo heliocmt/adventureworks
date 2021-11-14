@@ -10,12 +10,11 @@ with
             , taxamt 
             , freight 
             , totaldue
-            , status
             , territoryid 
             , billtoaddressid 
             , shiptoaddressid 
             , shipmethodid 
             , creditcardid 
-            from {{ source('erp_adventureworks','fact_orders')}}
+            from {{ source('erp_adventureworks','orders')}}
         )
         select * from source_data
