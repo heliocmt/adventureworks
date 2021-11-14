@@ -1,5 +1,5 @@
 with
-        source_data as (
+        source_data1 as (
             select
             creditcardid
             , cardtype
