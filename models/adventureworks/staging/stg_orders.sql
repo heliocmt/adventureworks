@@ -16,6 +16,6 @@ with
             , taxamt 
             , freight 
             , totaldue
-            from {{ source('erp_adventureworks','orders')}}
+            from {{ source('erp_adventureworks','fact_orders')}}
         )
         select * from source_data
