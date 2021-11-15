@@ -36,3 +36,6 @@ sources:
       - name: reasonsbridge
         columns:
           - name: salesorderid
+      - name: sales_salesorderheader
+        columns:
+          - name: salesorderid

@@ -40,7 +40,7 @@ with
     ), 
 
     orders as (
-        select
+        select         
         salesorderid
         , customerid 
         , orderdate 
@@ -51,6 +51,7 @@ with
         , freight 
         , totaldue
         , territoryid 
+        , status
         , billtoaddressid as addressid 
         , shiptoaddressid 
         , shipmethodid 
@@ -71,6 +72,7 @@ with
         , orders.freight 
         , orders.totaldue
         , orders.territoryid 
+        , orders.status
         , orders.addressid 
         , orders.shiptoaddressid 
         , orders.shipmethodid 
@@ -99,6 +101,7 @@ with
         , taxamt 
         , freight 
         , totaldue
+        , status
         , address1.addressid 
         , shiptoaddressid 
         , shipmethodid 	
