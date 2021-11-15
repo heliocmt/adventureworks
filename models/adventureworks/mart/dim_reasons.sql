@@ -12,5 +12,6 @@ with
         , reason
         , reasontype
         from staging
+        order by salesreasonid
     )
     select * from transformed
