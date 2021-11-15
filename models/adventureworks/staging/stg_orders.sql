@@ -11,6 +11,7 @@ with
             , freight 
             , totaldue
             , territoryid 
+            , status
             , billtoaddressid 
             , shiptoaddressid 
             , shipmethodid 
