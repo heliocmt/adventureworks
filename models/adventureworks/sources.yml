@@ -11,7 +11,7 @@ sources:
             tests:
               - unique
               - not_null
-      - name: products
+      - name: prooducts
         columns:
           - name: productid
             description: Chave primária da tabela Produtos
@@ -33,3 +33,6 @@ sources:
       - name: countryregion
         columns:
           - name: countryregioncode
+      - name: reasonsbridge
+        columns:
+          - name: salesorderid

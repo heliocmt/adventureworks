@@ -31,7 +31,8 @@ with
 
     reasons as (
         select 
-        , salesorder_fk
+        salesreason_fk
+        , salesorderid
         , salesreasonid	
         , reason	
         , reasontype
@@ -55,18 +56,42 @@ with
         , shipmethodid 
         , creditcardid	
         from {{ ref('stg_orders') }}
-    )
+    ),
     
-    orders_with_sk as (
+    orders2 as (
         select
-        , address1.address_fk
-        , reasons.salesreason_fk
+        orders.salesorderid
+        , salesreason_fk
+        , orders.customerid 
+        , orders.orderdate 
+        , orders.duedate 
+        , orders.shipdate 
+        , orders.subtotal 
+        , orders.taxamt 
+        , orders.freight 
+        , orders.totaldue
+        , orders.territoryid 
+        , orders.addressid 
+        , orders.shiptoaddressid 
+        , orders.shipmethodid 
+        , orders.creditcardid
+        , salesreasonid	
+        , reason	
+        , reasontype
+        from reasons as orders2
+        left join orders on orders2.salesorderid = orders.salesorderid
+    ),
+        
+    orders_with_sk as(     
+        select
+        salesorderid
         , customers.customer_fk
+        , address1.address_fk
+        , salesreason_fk
         , creditcard.creditcard_fk
         , customers.customerid	
         , customers.personid	
         , customers.territoryid
-        , salesorderid
         , orderdate 
         , duedate 
         , shipdate 
@@ -81,15 +106,16 @@ with
         , address1.city	
         , address1.stateprovinceid
         , address1.postalcode	
-        , reasons.salesreasonid	
-        , reasons.reason	
-        , reasons.reasontype
+        , salesreasonid	
+        , reason	
+        , reasontype
         , creditcard.creditcardid
         , creditcard.cardtype
-        from orders
+        from orders2 as orders_with_sk
         left join address1 on orders_with_sk.addressid = address1.addressid
-        left join reasons on orders_with_sk.salesorderid = reasons.salesorderid
         left join creditcard on orders_with_sk.creditcardid = creditcard.creditcardid
         left join customers on orders_with_sk.customerid = customers.customerid
+        order by salesorderid asc
         )
+
         select * from orders_with_sk

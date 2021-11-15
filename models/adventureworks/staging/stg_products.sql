@@ -4,6 +4,6 @@ with
             productid	
             , name	
             , productnumber	
-            from {{ source('erp_adventureworks','orders')}}
+            from {{ source('erp_adventureworks','prooducts')}}
         )
         select * from source_data
