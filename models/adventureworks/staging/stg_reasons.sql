@@ -1,18 +1,18 @@
 with
-        source_data1 as (
+        source1 as (
             select
             salesreasonid		
             , name as reason		
             , reasontype
             from {{ source('erp_adventureworks','reasons')}}
-        )
+        ),
         source_data as (
             select
             salesorderid		
-            , salesreasonid
-            , source_data1.reason
-            , source_data1.reasontype
-            from {{ source('erp_adventureworks','reasonsbridge')}}
-            left join source_data1 on source_data.salesorderid = source_data1.salesorderid 
+            , source1.salesreasonid
+            , source1.reason
+            , source1.reasontype
+            from {{ source('erp_adventureworks','reasonsbridge')}} as source_data
+            left join source1 on source_data.salesreasonid = source1.salesreasonid 
         )
         select * from source_data

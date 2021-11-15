@@ -1,7 +1,7 @@
 with
         source_data as (
             select
-            , customerid	
+            customerid	
             , personid	
             , territoryid
             from {{ source('erp_adventureworks','customers')}}

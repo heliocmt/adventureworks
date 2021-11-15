@@ -6,14 +6,14 @@ models:
          - name: salesorderid
            description: "Chave primária"
            tests:
-              - not_null
+              - unique
 
     - name: fact_order_details
       columns:
          - name: salesorderid
            description: "Chave primária"
            tests:
-              - not_null
+              - unique
 
     - name: dim_customers
       columns:
@@ -36,7 +36,6 @@ models:
          - name: salesreasonid
            description: "Chave primária"
            tests:
-              - unique
               - not_null
 
     - name: dim_creditcard
