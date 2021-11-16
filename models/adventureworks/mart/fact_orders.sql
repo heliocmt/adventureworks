@@ -33,8 +33,9 @@ with
     ),
 
     orders as (
-        select        
+        select       
         salesorderid
+        , salescustomer_sk
         , customerid 
         , orderdate 
         , duedate 
@@ -78,7 +79,7 @@ with
         , address1.province
         , address1.country
         from orders as orders_with_sk
-        right join customers on orders_with_sk.customerid = customers.customerid
+        left join customers on orders_with_sk.salescustomer_sk = customers.customer_fk
         left join address1 on orders_with_sk.addressid = address1.addressid
         ),
 

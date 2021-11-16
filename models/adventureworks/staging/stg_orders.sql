@@ -2,6 +2,7 @@ with
         source_data as (
             select
             row_number() over (order by salesorderid) as salesorderid_sk
+            , row_number() over (order by customerid) as salescustomer_sk
             , salesorderid
             , customerid 
             , orderdate 
