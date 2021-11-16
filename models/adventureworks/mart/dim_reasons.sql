@@ -13,50 +13,27 @@ with
         , reasontype
         from staging
     ),
-    orders as (
-        select 
+    order_details as (
+        select
         row_number() over (order by salesorderid) as salesorder_fk
-        , salesorderid
-        , customerid 
-        , orderdate 
-        , duedate 
-        , shipdate 
-        , subtotal 
-        , taxamt 
-        , freight 
-        , totaldue
-        , territoryid 
-        , status
-        , billtoaddressid 
-        , shiptoaddressid 
-        , shipmethodid 
-        , creditcardid 
-        from  {{ ref('stg_orders') }}
+        , salesorderid			
+        , orderqty		
+        , unitprice		
+        , unitpricediscount	
+        from  {{ ref('stg_order_details') }}
     ),
     reasons as (
         select
-        transformed.salesorderid
-        , salesorder_fk
-        , customerid 
-        , orderdate 
-        , duedate 
-        , shipdate 
-        , subtotal 
-        , taxamt 
-        , freight 
-        , totaldue
-        , territoryid 
-        , status
-        , billtoaddressid 
-        , shiptoaddressid 
-        , shipmethodid 
-        , creditcardid 
+        transformed.salesorderid 
         , transformed.salesorder_sk	
         , transformed.salesreasonid
         , transformed.reason
         , transformed.reasontype
-        from orders as reasons
+        , salesorder_fk
+        , orderqty		
+        , unitprice		
+        , unitpricediscount	
+        from order_details as reasons
         right join transformed on reasons.salesorder_fk = transformed.salesorder_sk
     )
     select * from reasons
-    order by salesorderid

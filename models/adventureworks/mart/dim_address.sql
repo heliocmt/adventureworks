@@ -7,7 +7,7 @@ with
     transformed as (
         select        
         row_number() over (order by addressid) as address_fk
-        , addressid	
+        , addressid
         , addressline1			
         , city	
         , province
