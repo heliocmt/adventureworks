@@ -3,7 +3,7 @@
 with
     staging as (
         select             
-        be_fk as customer_fk
+        customer_fk
         , customerid
         , personid
         , firstname

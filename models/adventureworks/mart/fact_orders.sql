@@ -90,7 +90,7 @@ with
         from orders as orders_with_sk
         left join address1 on orders_with_sk.addressid = address1.addressid
         left join creditcard on orders_with_sk.creditcardid = creditcard.creditcardid
-        left join customers on orders_with_sk.customerid = customers.customerid
+        right join customers on orders_with_sk.customerid = customers.customerid
         order by salesorderid asc
         )
 
