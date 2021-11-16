@@ -34,3 +34,4 @@ with
         left join products on order_details_with_sk.productid = products.productid
     )
     select * from order_details_with_sk
+    order by salesorderid
