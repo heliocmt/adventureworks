@@ -6,7 +6,7 @@ with
         creditcard_fk
         , creditcardid
         , cardtype
-        from {{ ref('dim_creditcard') }}
+        from {{ ref('dim_creditcard') }} as creditcard
     ), 
 
     customers as (
@@ -16,7 +16,7 @@ with
         , personid
         , firstname
         , lastname 
-        from {{ ref('dim_customers') }}
+        from {{ ref('dim_customers') }} as customers
     ),   
 
     address1 as (
@@ -29,21 +29,11 @@ with
         , country
         , stateprovinceid
         , postalcode	
-        from {{ ref('dim_address') }}
+        from {{ ref('dim_address') }} as address1
     ),
 
-    reasons as (
-        select 
-        salesreason_fk
-        , salesorderid
-        , salesreasonid	
-        , reason	
-        , reasontype
-        from {{ ref('dim_reasons') }}
-    ), 
-
     orders as (
-        select         
+        select        
         salesorderid
         , customerid 
         , orderdate 
@@ -59,7 +49,7 @@ with
         , shiptoaddressid 
         , shipmethodid 
         , creditcardid	
-        from {{ ref('stg_orders') }}
+        from {{ ref('stg_orders') }} as orders
     ),
         
     orders_with_sk as(     
@@ -67,7 +57,6 @@ with
         salesorderid
         , customers.customer_fk
         , address1.address_fk
-        , creditcard.creditcard_fk
         , customers.customerid	
         , customers.firstname	
         , customers.lastname
@@ -80,6 +69,7 @@ with
         , freight 
         , totaldue
         , status
+        , creditcardid
         , address1.addressid 
         , shiptoaddressid 
         , shipmethodid 	
@@ -87,13 +77,39 @@ with
         , address1.city	
         , address1.province
         , address1.country
-        , address1.stateprovinceid
-        , address1.postalcode	
-        , creditcard.creditcardid
-        , creditcard.cardtype
         from orders as orders_with_sk
-        left join address1 on orders_with_sk.addressid = address1.addressid
-        left join creditcard on orders_with_sk.creditcardid = creditcard.creditcardid
         right join customers on orders_with_sk.customerid = customers.customerid
+        left join address1 on orders_with_sk.addressid = address1.addressid
+        ),
+
+    final as (
+        select 
+        salesorderid
+        , customer_fk
+        , address_fk
+        , customerid	
+        , firstname	
+        , lastname
+        , personid
+        , orderdate 
+        , duedate 
+        , shipdate 
+        , subtotal 
+        , taxamt 
+        , freight 
+        , totaldue
+        , status
+        , addressid 
+        , shiptoaddressid 
+        , shipmethodid 	
+        , addressline1			
+        , city	
+        , province
+        , country
+        , creditcard.creditcard_fk  
+        , creditcard.creditcardid
+        , creditcard.cardtype 
+        from orders_with_sk as final     
+        left join creditcard on final.creditcardid = creditcard.creditcardid
         )
         select * from orders_with_sk

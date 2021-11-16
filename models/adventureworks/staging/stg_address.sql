@@ -33,6 +33,5 @@ with
             , source_data2.stateprovinceid
             from {{ source('erp_adventureworks','address')}} as source_data
             left join source_data2 on source_data.stateprovinceid = source_data2.stateprovinceid
-            order by addressid asc
         )
         select * from source_data

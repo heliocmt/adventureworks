@@ -11,4 +11,3 @@ with
         from {{ ref('stg_customers') }} as staging
     )
     select * from staging
-    where customerid is not null
