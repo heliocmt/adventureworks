@@ -1,7 +1,8 @@
 with
         source_data as (
             select
-            salesorderid
+            row_number() over (order by salesorderid) as salesorderid_sk
+            , salesorderid
             , customerid 
             , orderdate 
             , duedate 

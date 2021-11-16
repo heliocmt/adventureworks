@@ -59,4 +59,3 @@ with
         right join transformed on reasons.salesorder_fk = transformed.salesorder_sk
     )
     select * from reasons
-    order by salesorderid

@@ -32,6 +32,5 @@ with
         , unitpricediscount		
         from order_details as order_details_with_sk
         left join products on order_details_with_sk.productid = products.productid
-        order by salesorderid asc
     )
     select * from order_details_with_sk
