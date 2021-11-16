@@ -108,7 +108,7 @@ with
         , country
         , creditcard.creditcard_fk  
         , creditcard.creditcardid
-        , creditcard.cardtype 
+        , creditcard.cardtype
         from orders_with_sk as final     
         left join creditcard on final.creditcardid = creditcard.creditcardid
         )
