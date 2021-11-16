@@ -112,4 +112,4 @@ with
         from orders_with_sk as final     
         left join creditcard on final.creditcardid = creditcard.creditcardid
         )
-        select * from orders_with_sk
+        select * from final
