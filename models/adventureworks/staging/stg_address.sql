@@ -21,7 +21,8 @@ with
 
         source_data as (
             select
-            addressid	
+            row_number() over (order by addressid) as address_fk
+            , addressid	
             , addressline1			
             , city	
             , source_data2.country

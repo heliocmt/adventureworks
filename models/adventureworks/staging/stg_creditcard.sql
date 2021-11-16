@@ -1,7 +1,8 @@
 with
         source_data as (
             select
-            creditcardid
+            row_number() over (order by creditcardid) as creditcard_fk
+            , creditcardid
             , cardtype
             from {{ source('erp_adventureworks','creditcard')}}
         )
