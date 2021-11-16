@@ -12,9 +12,10 @@ with
     customers as (
         select 
         customer_fk
-        , customerid	
-        , personid	
-        , territoryid
+        , customerid
+        , personid
+        , firstname
+        , lastname 
         from {{ ref('dim_customers') }}
     ),   
 
@@ -66,8 +67,9 @@ with
         , address1.address_fk
         , creditcard.creditcard_fk
         , customers.customerid	
-        , customers.personid	
-        , customers.territoryid
+        , customers.firstname	
+        , customers.lastname
+        , customers.personid
         , orderdate 
         , duedate 
         , shipdate 

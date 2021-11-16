@@ -39,3 +39,9 @@ sources:
       - name: sales_salesorderheader
         columns:
           - name: salesorderid
+      - name: personbridge
+        columns:
+          - name: businessentityid
+      - name: person
+        columns:
+          - name: personid
