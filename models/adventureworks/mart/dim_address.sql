@@ -10,11 +10,10 @@ with
         , addressid	
         , addressline1			
         , city	
+        , province
         , country
         , postalcode		
         , countryregioncode		
-        , province
-        , territoryid		
         , stateprovincecode
         , stateprovinceid
         from staging
