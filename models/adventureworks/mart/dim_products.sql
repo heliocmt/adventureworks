@@ -6,9 +6,9 @@ with
     ),
     transformed as (
         select
-        row_number() over (order by productid) as product_fk
+        product_fk
         , productid	
-        , name as product_name	
+        , product_name	
         , productnumber	
         from staging
     )

@@ -6,7 +6,7 @@ with
     ),
     transformed as (
         select       
-        row_number() over (order by creditcardid) as creditcard_fk
+        creditcard_fk
         , creditcardid
         , cardtype
         from staging
