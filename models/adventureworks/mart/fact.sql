@@ -65,13 +65,14 @@ with
         
     orders_with_sk as(     
         select 
-        salesorderid
-        , customers.customer_fk
-        , address1.address_fk
-        , customers.customerid	
-        , customers.firstname	
-        , customers.lastname
-        , customers.personid
+        customerid
+        , addressid
+        , order_details.salesorderid	
+        , order_details.product_fk
+        , order_details.productid
+        , order_details.product_name	
+        , order_details.unitprice		
+        , order_details.orderqty	
         , orderdate 
         , duedate 
         , shipdate 
@@ -80,27 +81,48 @@ with
         , freight 
         , totaldue
         , status
-        , creditcardid
-        , address1.addressid 
+        , creditcardid 
         , shiptoaddressid 
         , shipmethodid 	
-        , address1.addressline1			
-        , address1.city	
-        , address1.province
-        , address1.country
         from orders as orders_with_sk
-        right join customers on orders_with_sk.customerid = customers.customerid
-        left join address1 on orders_with_sk.addressid = address1.addressid
+        right join order_details on orders_with_sk.salesorderid = order_details.salesorderid
         ),
 
     final as (
         select 
-        customer_fk
-        , address_fk
-        , customerid	
-        , firstname	
-        , lastname
-        , personid
+        salesorderid
+        , orderdate 
+        , duedate 
+        , shipdate 
+        , subtotal 
+        , taxamt 
+        , freight 
+        , totaldue
+        , status
+        , address1.addressid 
+        , shiptoaddressid 
+        , shipmethodid 			
+        , creditcard.creditcard_fk  
+        , creditcard.creditcardid
+        , creditcard.cardtype
+        , address1.address_fk
+        , customerid
+        , address1.addressline1			
+        , address1.city	
+        , address1.province
+        , address1.country
+        , product_fk
+        , productid
+        , product_name	
+        , unitprice		
+        , orderqty
+        from orders_with_sk as final     
+        left join creditcard on final.creditcardid = creditcard.creditcardid
+        left join address1 on final.addressid = address1.addressid
+        ),
+        final2 as(
+        select
+        salesorderid
         , orderdate 
         , duedate 
         , shipdate 
@@ -111,22 +133,27 @@ with
         , status
         , addressid 
         , shiptoaddressid 
-        , shipmethodid 	
+        , shipmethodid 			
+        , creditcard_fk  
+        , creditcardid
+        , cardtype
+        , address_fk
         , addressline1			
         , city	
         , province
         , country
-        , creditcard.creditcard_fk  
-        , creditcard.creditcardid
-        , creditcard.cardtype
-        , order_details.salesorderid	
-        , order_details.product_fk
-        , order_details.productid
-        , order_details.product_name	
-        , order_details.unitprice		
-        , order_details.orderqty		
-        from orders_with_sk as final     
-        left join creditcard on final.creditcardid = creditcard.creditcardid
-        left join order_details on final.salesorderid = order_details.salesorderid
+        , product_fk
+        , productid
+        , product_name	
+        , unitprice		
+        , orderqty
+        , customers.customer_fk
+        , customers.customerid	
+        , customers.firstname	
+        , customers.lastname
+        , customers.personid
+        from final as final2
+        left join customers on final2.customerid = customers.customerid
         )
-        select * from final
+
+        select * from final2
