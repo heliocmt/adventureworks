@@ -25,6 +25,8 @@ with
         , addressid	
         , addressline1			
         , city	
+        , province
+        , country
         , stateprovinceid
         , postalcode	
         from {{ ref('dim_address') }}
@@ -83,6 +85,8 @@ with
         , shipmethodid 	
         , address1.addressline1			
         , address1.city	
+        , address1.province
+        , address1.country
         , address1.stateprovinceid
         , address1.postalcode	
         , creditcard.creditcardid
