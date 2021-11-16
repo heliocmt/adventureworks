@@ -92,5 +92,4 @@ with
         left join creditcard on orders_with_sk.creditcardid = creditcard.creditcardid
         right join customers on orders_with_sk.customerid = customers.customerid
         )
-
         select * from orders_with_sk
