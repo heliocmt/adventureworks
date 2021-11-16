@@ -16,13 +16,8 @@ with
     orders as (
         select 
         row_number() over (order by salesorderid) as salesorder_fk
-        , customer_fk
-        , address_fk
-        , creditcard_fk
-        , customerid	
-        , firstname	
-        , lastname
-        , personid
+        , salesorderid
+        , customerid 
         , orderdate 
         , duedate 
         , shipdate 
@@ -30,31 +25,19 @@ with
         , taxamt 
         , freight 
         , totaldue
+        , territoryid 
         , status
-        , addressid 
+        , billtoaddressid 
         , shiptoaddressid 
-        , shipmethodid 	
-        , addressline1			
-        , city	
-        , province
-        , country
-        , stateprovinceid
-        , postalcode	
-        , creditcardid
-        , cardtype
-        from  {{ ref('fact_orders') }}
+        , shipmethodid 
+        , creditcardid 
+        from  {{ ref('stg_orders') }}
     ),
     reasons as (
         select
         transformed.salesorderid
         , salesorder_fk
-        , customer_fk
-        , address_fk
-        , creditcard_fk
-        , customerid	
-        , firstname	
-        , lastname
-        , personid
+        , customerid 
         , orderdate 
         , duedate 
         , shipdate 
@@ -62,24 +45,18 @@ with
         , taxamt 
         , freight 
         , totaldue
+        , territoryid 
         , status
-        , addressid 
+        , billtoaddressid 
         , shiptoaddressid 
-        , shipmethodid 	
-        , addressline1			
-        , city	
-        , province
-        , country
-        , stateprovinceid
-        , postalcode	
-        , creditcardid
-        , cardtype
+        , shipmethodid 
+        , creditcardid 
         , transformed.salesorder_sk	
         , transformed.salesreasonid
         , transformed.reason
         , transformed.reasontype
         from orders as reasons
-        left join transformed on reasons.salesorder_fk = transformed.salesorder_sk
+        right join transformed on reasons.salesorder_fk = transformed.salesorder_sk
     )
     select * from reasons
     order by salesorderid
