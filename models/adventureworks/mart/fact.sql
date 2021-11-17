@@ -120,9 +120,11 @@ with
         left join creditcard on final.creditcardid = creditcard.creditcardid
         left join address1 on final.addressid = address1.addressid
         ),
-        final2 as(
+    final2 as(
         select
         salesorderid
+        , customers.customer_fk
+        , customers.customerid	
         , orderdate 
         , duedate 
         , shipdate 
@@ -147,13 +149,10 @@ with
         , product_name	
         , unitprice		
         , orderqty
-        , customers.customer_fk
-        , customers.customerid	
         , customers.firstname	
         , customers.lastname
         , customers.personid
         from final as final2
         left join customers on final2.customerid = customers.customerid
         )
-
         select * from final2
