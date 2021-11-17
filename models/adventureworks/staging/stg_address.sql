@@ -2,7 +2,8 @@ with
         address1 as (
             select
             row_number() over (order by addressid) as address_fk
-            , addressid	
+            , addressid
+            , stateprovinceid	
             , addressline1			
             , city	
             , postalcode		

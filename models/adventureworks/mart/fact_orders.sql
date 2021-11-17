@@ -14,8 +14,16 @@ with
         customer_fk
         , customerid
         , personid
-        , firstname
-        , lastname 
+        , storeid
+        , businessentityid
+        , fullname
+        , storecustomerid
+        , storename
+        , case
+        when person.fullname is not null
+        then person.fullname
+        else store.storename
+        end as customername
         from {{ ref('dim_customers') }} as customers
     ),   
 

@@ -6,7 +6,6 @@ with
         product_fk
         , productid	
         , product_name	
-        , productnumber	
         from {{ ref('dim_products') }}
     ),
     order_details as (
@@ -27,8 +26,6 @@ with
         , products.product_name	
         , unitprice		
         , orderqty		
-        , products.productnumber	
-        , salesorderdetailid	
         , unitpricediscount		
         from order_details as order_details_with_sk
         left join products on order_details_with_sk.productid = products.productid
