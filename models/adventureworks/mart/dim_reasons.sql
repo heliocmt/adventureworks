@@ -11,8 +11,7 @@ with
 
     reasons_bridge as (
         select 
-        row_number() over (order by salesorderid) as salesorder_sk
-        , salesorderid
+        salesorderid
         , salesreasonid	
         from {{ ref('stg_reasons_bridge') }}
     ),
@@ -20,11 +19,20 @@ with
     transformed as (
         select 
         reasons_bridge.salesorderid
-        , reasons_bridge.salesorder_sk
         , reason
         , reasontype 
         , reasons_bridge.salesreasonid
         from  reasons as transformed
         left join reasons_bridge on transformed.salesreasonid = reasons_bridge.salesreasonid
+        where reasons_bridge.salesreasonid is not null
+    ),
+
+    grouped as (
+        select
+        salesorderid
+        , STRING_AGG(reason, ', ') as salesreasons
+        from transformed as grouped
+        group by salesorderid
     )   
-    select * from transformed
+
+    select * from grouped

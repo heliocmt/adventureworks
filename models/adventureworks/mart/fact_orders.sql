@@ -20,9 +20,9 @@ with
         , storecustomerid
         , storename
         , case
-        when person.fullname is not null
-        then person.fullname
-        else store.storename
+        when fullname is not null
+        then fullname
+        else storename
         end as customername
         from {{ ref('dim_customers') }} as customers
     ),   
@@ -36,7 +36,6 @@ with
         , province
         , country
         , stateprovinceid
-        , postalcode	
         from {{ ref('dim_address') }} as address1
     ),
 

@@ -1,7 +1,7 @@
 with
         source_data as (
             select
-            row_number() over (order by productid) as product_sk
+            row_number() over (order by productid) as product_fk
             , productid	
             , name as product_name
             , productnumber	
