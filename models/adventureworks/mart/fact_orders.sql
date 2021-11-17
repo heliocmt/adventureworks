@@ -78,6 +78,9 @@ with
         , address1.city	
         , address1.province
         , address1.country
+        , creditcard.creditcard_fk  
+        , creditcard.creditcardid
+        , creditcard.cardtype
         from orders as orders_with_sk
         left join customers on orders_with_sk.salescustomer_sk = customers.customer_fk
         left join address1 on orders_with_sk.addressid = address1.addressid
@@ -107,10 +110,9 @@ with
         , city	
         , province
         , country
-        , creditcard.creditcard_fk  
-        , creditcard.creditcardid
-        , creditcard.cardtype
+
         from orders_with_sk as final     
         left join creditcard on final.creditcardid = creditcard.creditcardid
         )
         select * from final
+        
