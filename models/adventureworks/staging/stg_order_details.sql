@@ -1,5 +1,5 @@
 with     
-        order_details as (
+        source_data as (
         select	
         salesorderid
         , productid		
@@ -7,6 +7,6 @@ with
         , orderqty		
         , salesorderdetailid	
         , unitpricediscount		
-        from {{ source('erp_adventureworks','order_details') }}
+        from {{ source('erp_adventureworks','order_details') }} as source_data
     )
-    select order_details
+    select * from source_data

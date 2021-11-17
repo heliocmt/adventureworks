@@ -48,3 +48,6 @@ sources:
       - name: businessentitycontact
         columns:
           - name: businessentityid
+      - name: store
+        columns:
+          - name: customerid

@@ -1,5 +1,5 @@
 with
-        stg_province as (
+        province1 as (
             select
             name as province
             , territoryid		
@@ -8,4 +8,4 @@ with
             , stateprovinceid
             from {{ source('erp_adventureworks','stateprovince')}} 
         )
-        select * from stg_province
+        select * from province1

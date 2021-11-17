@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with
-    stg_address as (
+    address1 as (
         select         
         row_number() over (order by addressid) as address_fk
         , addressid	
@@ -11,7 +11,7 @@ with
         , postalcode 
         from {{ ref('stg_address') }}
     ),
-    stg_province as (
+    province1 as (
         select             
         province
         , countryregioncode
@@ -20,7 +20,7 @@ with
         , stateprovinceid 
         from {{ ref('stg_province') }}
     ),
-    stg_country as (
+    country1 as (
         select 
         countryregioncode
         , country 
@@ -33,13 +33,13 @@ with
         , address_fk	
         , addressline1			
         , city	
-        , stg_province.countryregioncode
-        , stg_province.province
-        , stg_province.territoryid		
-        , stg_province.stateprovincecode
-        , stg_province.stateprovinceid
-        from stg_address as source_data
-        left join stg_province on source_data.stateprovinceid = stg_province.stateprovinceid
+        , province1.countryregioncode
+        , province1.province
+        , province1.territoryid		
+        , province1.stateprovincecode
+        , province1.stateprovinceid
+        from address1 as source_data
+        left join province1 on source_data.stateprovinceid = province1.stateprovinceid
     ),
 
     source_data2 as (
@@ -48,13 +48,13 @@ with
         , address_fk	
         , addressline1			
         , city	
-        , stg_country.country
+        , country1.country
         , province
         , territoryid		
         , stateprovincecode
-        , stg_country.countryregioncode 
+        , country1.countryregioncode 
         , stateprovinceid
         from source_data as source_data2
-        left join stg_country on source_data2.countryregioncode = stg_country.countryregioncode
+        left join country1 on source_data2.countryregioncode = country1.countryregioncode
     )
     select * from source_data2

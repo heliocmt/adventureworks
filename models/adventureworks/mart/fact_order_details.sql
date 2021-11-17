@@ -9,7 +9,7 @@ with
         , productnumber	
         from {{ ref('dim_products') }}
     ),
-        order_details as (
+    order_details as (
         select	
         salesorderid
         , productid		
@@ -34,4 +34,3 @@ with
         left join products on order_details_with_sk.productid = products.productid
     )
     select * from order_details_with_sk
-    order by salesorderid
