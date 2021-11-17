@@ -1,11 +1,11 @@
 with
-        customers as (
+        customer as (
             select
-            row_number() over (order by customerid) as customer_sf
+            row_number() over (order by customerid) as customer_fk
             , customerid	
-            , personid	
+            , personid
             , storeid	
-            from {{ source('erp_adventureworks','customers')}} 
+            from {{ source('erp_adventureworks','customers')}} as customer
         )
-        select * from customers
+        select * from customer
     

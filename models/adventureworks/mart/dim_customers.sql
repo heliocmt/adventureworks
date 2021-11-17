@@ -13,7 +13,6 @@ with
     person as (
         select
         businessentityid
-        , persontype	
         , fullname
         from {{ ref('stg_person')}} as person
     ),
