@@ -14,8 +14,16 @@ with
         customer_fk
         , customerid
         , personid
-        , firstname
-        , lastname 
+        , storeid
+        , businessentityid
+        , fullname
+        , storecustomerid
+        , storename
+        , case
+        when fullname is not null
+        then fullname
+        else storename
+        end as customername
         from {{ ref('dim_customers') }} as customers
     ),   
 
@@ -28,14 +36,12 @@ with
         , province
         , country
         , stateprovinceid
-        , postalcode	
         from {{ ref('dim_address') }} as address1
     ),
 
     orders as (
         select       
         salesorderid
-        , salescustomer_sk
         , customerid 
         , orderdate 
         , duedate 
@@ -58,10 +64,7 @@ with
         salesorderid
         , customers.customer_fk
         , address1.address_fk
-        , customers.customerid	
-        , customers.firstname	
-        , customers.lastname
-        , customers.personid
+        , creditcard.creditcard_fk
         , orderdate 
         , duedate 
         , shipdate 
@@ -70,47 +73,12 @@ with
         , freight 
         , totaldue
         , status
-        , creditcardid
-        , address1.addressid 
         , shiptoaddressid 
         , shipmethodid 	
-        , address1.addressline1			
-        , address1.city	
-        , address1.province
-        , address1.country
         from orders as orders_with_sk
-        left join customers on orders_with_sk.salescustomer_sk = customers.customer_fk
+        left join customers on orders_with_sk.customerid = customers.customerid
         left join address1 on orders_with_sk.addressid = address1.addressid
-        ),
-
-    final as (
-        select 
-        salesorderid
-        , customer_fk
-        , address_fk
-        , customerid	
-        , firstname	
-        , lastname
-        , personid
-        , orderdate 
-        , duedate 
-        , shipdate 
-        , subtotal 
-        , taxamt 
-        , freight 
-        , totaldue
-        , status
-        , addressid 
-        , shiptoaddressid 
-        , shipmethodid 	
-        , addressline1			
-        , city	
-        , province
-        , country
-        , creditcard.creditcard_fk  
-        , creditcard.creditcardid
-        , creditcard.cardtype
-        from orders_with_sk as final     
-        left join creditcard on final.creditcardid = creditcard.creditcardid
+        left join creditcard on orders_with_sk.creditcardid = creditcard.creditcardid
         )
-        select * from final
+        select * from orders_with_sk
+        

@@ -1,9 +1,7 @@
 with
-        source_data as (
+        orders as (
             select
-            row_number() over (order by salesorderid) as salesorderid_sk
-            , row_number() over (order by customerid) as salescustomer_sk
-            , salesorderid
+            salesorderid
             , customerid 
             , orderdate 
             , duedate 
@@ -20,4 +18,4 @@ with
             , creditcardid 
             from {{ source('erp_adventureworks','orders')}}
         )
-        select * from source_data
+        select * from orders

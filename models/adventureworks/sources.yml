@@ -45,3 +45,9 @@ sources:
       - name: person
         columns:
           - name: personid
+      - name: businessentitycontact
+        columns:
+          - name: businessentityid
+      - name: store
+        columns:
+          - name: customerid

@@ -1,4 +1,3 @@
-{{ config(materialized='table') }}
 with
         source_data as (
             select
@@ -6,6 +5,6 @@ with
             , productid	
             , name as product_name
             , productnumber	
-            from {{ source('erp_adventureworks','prooducts')}}
+            from {{ source('erp_adventureworks','prooducts')}} as source_data
         )
         select * from source_data

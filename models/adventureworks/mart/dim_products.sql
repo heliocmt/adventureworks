@@ -9,7 +9,6 @@ with
         product_fk
         , productid	
         , product_name	
-        , productnumber	
         from staging
     )
     select * from transformed
