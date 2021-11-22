@@ -12,7 +12,7 @@ with
     reasons_bridge as (
         select 
         salesorderid
-        , salesreasonid	
+        , salesreasonid
         from {{ ref('stg_reasons_bridge') }}
     ),
 
@@ -24,7 +24,7 @@ with
         , reasons_bridge.salesreasonid
         from  reasons as transformed
         left join reasons_bridge on transformed.salesreasonid = reasons_bridge.salesreasonid
-        where reasons_bridge.salesreasonid is not null
+        where reasons_bridge.salesreasonid is not null 
     ),
 
     grouped as (
